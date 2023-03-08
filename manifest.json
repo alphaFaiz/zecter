@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Zecter",
+  "version": "1.0",
+  "description": "An ultimate Chrome extension.",
+  "permissions": ["cookies", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": { "128": "logo.png" }
+}
