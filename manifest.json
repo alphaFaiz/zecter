@@ -3,7 +3,7 @@
   "name": "Zecter",
   "version": "1.0",
   "description": "An ultimate Chrome extension.",
-  "permissions": ["cookies", "scripting"],
+  "permissions": ["cookies", "scripting", "gcm"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
